@@ -8,7 +8,12 @@
 </head>
 <body>
     <div class="game-container">
-        <h1>Tic-Tac-Toe</h1>
+        <div class="header-section"> 
+            <div class="player-one">Player one's marker: X</div>
+            <h1>Tic-Tac-Toe</h1>
+            <div class="player-two">Player two's marker: O</div>
+        </div>
+        <div class="turn-display"></div>
         <div class="gameboard">
             <div class="cell" data-row="0" data-column="0"></div>
             <div class="cell" data-row="0" data-column="1"></div>
@@ -20,7 +25,7 @@
             <div class="cell" data-row="2" data-column="1"></div>
             <div class="cell" data-row="2" data-column="2"></div>
         </div>
-        <div class="message-area"></div>
+        <div class="result-display"></div>
         <button class="restart-button">Restart Game</button>
     </div>
 
