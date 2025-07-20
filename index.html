@@ -7,16 +7,30 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="game-container">
-        <div class="header-section"> 
-            <h1>Tic-Tac-Toe</h1>
+    <div class="main-content-wrapper">
+        <div class="player-input-card">
+            <h2>Enter Player Names</h2>
+            <div class="player-input-group">
+                <label for="playerOneName">Player 1 (X):</label>
+                <input type="text" id="playerOneName" placeholder="Player One" maxlength="32">
+            </div>
+            <div class="player-input-group">
+                <label for="playerTwoName">Player 2 (O):</label>
+                <input type="text" id="playerTwoName" placeholder="Player Two" maxlength="32">
+            </div>
+            <button class="save-names-button">Save Names</button>
         </div>
-        <div class="turn-display"></div>
-        <div class="gameboard">
-    
+        <div class="game-container">
+            <div class="header-section"> 
+                <h1>Tic-Tac-Toe</h1>
+            </div>
+            <div class="turn-display"></div>
+            <div class="gameboard">
+        
+            </div>
+            <div class="result-display"></div>
+            <button class="restart-button">Restart Game</button>
         </div>
-        <div class="result-display"></div>
-        <button class="restart-button">Restart Game</button>
     </div>
     <footer class="game-footer">
         <span>&copy; 2025 </span>

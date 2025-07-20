@@ -53,6 +53,7 @@ const displayController = (function() {
     playerOneName = "Player One"
     playerTwoName = "Player Two"
 
+
     const restartButton = document.querySelector(".restart-button")
     restartButton.addEventListener("click", () => {
         resetGame();
@@ -98,7 +99,7 @@ const displayController = (function() {
     const checkGameEnd = () => {
         const currentBoardValues = Gameboard.getBoard();
         const resultDisplay = document.querySelector(".result-display")
-        renderBoard();
+
         // Horizontal win
         for (let i = 0; i < 3; i++) {
             if (
@@ -109,6 +110,7 @@ const displayController = (function() {
                 resultDisplay.classList.add(`${getActivePlayer().marker}`);
                 resultDisplay.textContent = `${getActivePlayer().name} wins`;
                 gameOver = true;
+                return;
             }
         }
         // Vertical win
@@ -121,6 +123,7 @@ const displayController = (function() {
                 resultDisplay.classList.add(`${getActivePlayer().marker}`);
                 resultDisplay.textContent = `${getActivePlayer().name} wins`;
                 gameOver = true;
+                return;
             }
         }
         // Diagonal wins
@@ -132,6 +135,7 @@ const displayController = (function() {
             resultDisplay.classList.add(`${getActivePlayer().marker}`);
             resultDisplay.textContent = `${getActivePlayer().name} wins`;
             gameOver = true;
+            return;
         }
 
         if (
@@ -142,6 +146,7 @@ const displayController = (function() {
             resultDisplay.classList.add(`${getActivePlayer().marker}`);
             resultDisplay.textContent = `${getActivePlayer().name} wins`;
             gameOver = true;
+            return;
         }
 
         let filledCells = 0;
@@ -159,7 +164,6 @@ const displayController = (function() {
             gameOver = true;
         }
     };
-
     const playGame = (row, column) => {
         const currentPlayerMarker = getActivePlayer().marker;
         const markerPlacedSuccessfully = board.placeMarker(row, column, currentPlayerMarker);
@@ -216,9 +220,39 @@ const displayController = (function() {
                     playGame(rowIndex, colIndex);
                     renderBoard();
                 });
+
+                if (!cellValue) {
+                    cellDiv.addEventListener("mouseover", () => {
+                        if (gameOver) return;
+                        const activePlayerMarker = getActivePlayer().marker;
+                        cellDiv.textContent = activePlayerMarker;
+                        cellDiv.classList.add("preview");
+                        cellDiv.classList.add(activePlayerMarker);
+                    });
+                    cellDiv.addEventListener("mouseout", () => {
+                        if (gameOver) return;
+                        cellDiv.textContent = "";
+                    })
+                }
+
                 gameBoardDiv.appendChild(cellDiv);
             });
         });
+
+            const saveNamesBtn = document.querySelector(".save-names-button");
+            const chosenNameOne = document.querySelector("#playerOneName");
+            const chosenNameTwo = document.querySelector("#playerTwoName");
+            saveNamesBtn.addEventListener("click", () => {
+            players[0].name = chosenNameOne.value;
+            players[1].name = chosenNameTwo.value;
+            if (!chosenNameOne.value && !chosenNameTwo.value) {
+                players[0].name = playerOneName; 
+                players[1].name = playerTwoName;
+            } 
+            renderBoard();
+        });
+
+
     }
 
     printNewRound();

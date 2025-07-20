@@ -9,8 +9,77 @@ body {
     background-color: #e0e0e0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    padding: 20px;
+    padding: 0;
     box-sizing: border-box;
+}
+
+.main-content-wrapper {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    margin-bottom: 0px;
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.player-input-card {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    max-width: 350px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.player-input-card h2 {
+    color: #333333;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.8em;
+}
+
+.player-input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.player-input-group label {
+    font-size: 1.1em;
+    color: #555555;
+    margin-bottom: 5px;
+}
+
+.player-input-group input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.save-names-button {
+    padding: 12px 25px;
+    font-size: 1.1em;
+    cursor: pointer;
+    background-color: #17a89c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-out;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+}
+
+.save-names-button:hover {
+    background-color: #1da39d;
+    transform: translateY(-2px);
 }
 
 .game-container {
@@ -27,12 +96,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 25px;
+    margin-bottom: 0px;
 }
 
 h1 {
     color: #333333;
-    margin-bottom: 25px;
+    margin-bottom: 0px;
     font-size: 2.2em;
     text-align: center;
 }
@@ -56,12 +125,20 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 4.5em; /* Increased font size for bigger board */
+    font-size: 7.5em;
     font-weight: bold;
     color: #333333;
     cursor: pointer;
     border: 1px solid #cccccc;
     transition: background-color 0.2s ease-in-out, transform 0.1s ease-out;
+}
+
+.cell.X.preview {
+    color: rgba(231, 76, 60, 0.3);
+}
+
+.cell.O.preview {
+    color: rgba(52, 152, 219, 0.3);
 }
 
 .cell:hover {
@@ -87,10 +164,10 @@ h1 {
 
 .result-display {
     margin-top: 20px;
-    font-size: 1.3em;
+    font-size: 1.8em;
     font-weight: bold;
     color: #555555;
-    min-height: 1.5em;
+    min-height: 1.2em;
     margin-bottom: 20px;
 }
 
@@ -121,9 +198,9 @@ h1 {
 
 .turn-display,
 .result-display {
-    font-size: 1.3em;
+    font-size: 1.8em;
     font-weight: bold;
-    min-height: 1em;
+    min-height: 1.2em;
 }
 
 .turn-display.one {
@@ -133,7 +210,6 @@ h1 {
 .turn-display.two {
     color: #3498db;
 }
-
 
 .result-display.X {
     color: #e74c3c;
@@ -179,6 +255,19 @@ h1 {
     height: 1.3em;
     width: 1.3em;
     transition: transform 0.5s ease-in-out;
+}
+
+@media (max-width: 768px) {
+    .main-content-wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .player-input-card,
+    .game-container {
+        max-width: 90%;
+    }
 }
 
 @media (max-width: 450px) {
