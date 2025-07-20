@@ -71,6 +71,7 @@ const displayController = (function() {
 
     const checkGameEnd = () => {
         const currentBoardValues = Gameboard.getBoard();
+        renderBoard();
         // Horizontal win
         for (let i = 0; i < 3; i++) {
             if (
@@ -144,10 +145,11 @@ const displayController = (function() {
             console.log("Game over!")
 
 
-            return
+            return;
         }
 
         switchTurn();
+        renderBoard();
         console.log(`${getActivePlayer().name}'s turn.`)
 
     }
@@ -155,6 +157,9 @@ const displayController = (function() {
     const renderBoard = () => {
         const gameBoardDiv = document.querySelector(".gameboard");
         gameBoardDiv.innerHTML = "";
+        const turnDisplay = document.querySelector(".turn-display");
+
+        turnDisplay.textContent = `It's ${getActivePlayer().name}'s turn!`;
 
         const currentBoardValues = board.getBoard();
 
