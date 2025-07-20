@@ -210,6 +210,10 @@ const displayController = (function() {
                 if (cellValue) {
                     cellDiv.classList.add(cellValue);
                 }
+                cellDiv.addEventListener("click", () => {
+                    playGame(rowIndex, colIndex);
+                    renderBoard();
+                });
                 gameBoardDiv.appendChild(cellDiv);
             });
         });
