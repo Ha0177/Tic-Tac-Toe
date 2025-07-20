@@ -65,6 +65,8 @@ const displayController = (function() {
 
     const printNewRound = () => {
         board.getBoard();
+        renderBoard();
+        console.log(`${getActivePlayer().name}'s turn.`);
     }
 
     const checkGameEnd = () => {
@@ -148,6 +150,27 @@ const displayController = (function() {
         switchTurn();
         console.log(`${getActivePlayer().name}'s turn.`)
 
+    }
+
+    const renderBoard = () => {
+        const gameBoardDiv = document.querySelector(".gameboard");
+        gameBoardDiv.innerHTML = "";
+
+        const currentBoardValues = board.getBoard();
+
+        currentBoardValues.forEach((row, rowIndex) => {
+            row.forEach((cellValue, colIndex) => {
+                const cellDiv = document.createElement("div");
+                cellDiv.classList.add("cell");
+                cellDiv.dataset.row = rowIndex;
+                cellDiv.dataset.column = colIndex;
+                cellDiv.textContent = cellValue;
+                if (cellValue) {
+                    cellDiv.classList.add(cellValue);
+                }
+                gameBoardDiv.appendChild(cellDiv);
+            });
+        });
     }
 
     printNewRound();
