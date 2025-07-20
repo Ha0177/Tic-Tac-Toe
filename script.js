@@ -65,61 +65,64 @@ const displayController = (function() {
 
     const printNewRound = () => {
         board.getBoard();
-        console.log(`${getActivePlayer().name}'s turn.`)
     }
 
     const checkGameEnd = () => {
-            const currentBoardValues = Gameboard.getBoard().map(row => row.map(cell => cell.getValue()));
-            // Horizontal win
-            for (let i = 0; i < 3; i++) {
-                if (currentBoardValues[i][0] !== "" &&
-                    currentBoardValues[i][0] === currentBoardValues[i][1] &&
-                    currentBoardValues[i][1] === currentBoardValues[i][2]
-                ) {
-                    console.log(`${currentBoardValues[i][0]} wins horizontally`)
-                    return true;
+        const currentBoardValues = Gameboard.getBoard();
+        // Horizontal win
+        for (let i = 0; i < 3; i++) {
+            if (
+                currentBoardValues[i][0] !== "" &&
+                currentBoardValues[i][0] === currentBoardValues[i][1] &&
+                currentBoardValues[i][1] === currentBoardValues[i][2]
+            ) {
+                console.log(`${getActivePlayer().name} wins horizontally`);
+                return true;
+            }
+        }
+        // Vertical win
+        for (let i = 0; i < 3; i++) {
+            if (
+                currentBoardValues[0][i] !== "" &&
+                currentBoardValues[0][i] === currentBoardValues[1][i] &&
+                currentBoardValues[1][i] === currentBoardValues[2][i]
+            ) {
+                console.log(`${getActivePlayer().name} wins vertically`);
+                return true;
+            }
+        }
+        // Diagonal wins
+        if (
+            currentBoardValues[0][0] !== "" &&
+            currentBoardValues[0][0] === currentBoardValues[1][1] &&
+            currentBoardValues[1][1] === currentBoardValues[2][2]
+        ) {
+            console.log(`${getActivePlayer().name} wins diagonally`);
+            return true;
+        }
+
+        if (
+            currentBoardValues[0][2] !== "" &&
+            currentBoardValues[0][2] === currentBoardValues[1][1] &&
+            currentBoardValues[1][1] === currentBoardValues[2][0]
+        ) {
+            console.log(`${getActivePlayer().name} wins diagonally`);
+            return true;
+        }
+
+        let filledCells = 0;
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (currentBoardValues[i][j] !== "") {
+                    filledCells++;
                 }
             }
-            // Vertical win
-            for (let i = 0; i < 3; i++) {
-                if (currentBoardValues[0][i] !== "" &&
-                    currentBoardValues[0][i] === currentBoardValues[1][i] &&
-                    currentBoardValues[1][i] === currentBoardValues[2][i]
-                ) {
-                    console.log(`${currentBoardValues[0][i]} wins vertically`)
-                    return true;
-                    }
-                }
-                // Diagonal wins
-                if (currentBoardValues[0][0] !== "" &&
-                    currentBoardValues[0][0] === currentBoardValues[1][1] &&
-                    currentBoardValues[1][1] === currentBoardValues[2][2] 
-                ) {
-                    console.log(`${currentBoardValues[0][0]} wins diagonally`)
-                    return true;
-                }
+        }
 
-                if (currentBoardValues[0][2] !== "" &&
-                    currentBoardValues[0][2] === currentBoardValues[1][1] &&
-                    currentBoardValues[1][1] === currentBoardValues[2][0] 
-                ) {
-                    console.log(`${currentBoardValues[0][2]} wins diagonally`)
-                    return true;
-                }
-
-                let filledCells = 0
-                for (let i = 0; i < 3; i++) {
-                    for(let j =0; j < 3; j++) {
-                        if (currentBoardValues[i][j] !== "") {
-                            filledCells++;
-                        }
-                    }
-                }
-
-                if (filledCells === 9) {
-                    console.log("It's a draw")
-                    return true;
-                }
+        if (filledCells === 9) {
+            console.log("It's a draw");
+            return true;
+        }
         return false;
     };
 
@@ -133,14 +136,18 @@ const displayController = (function() {
             return;
         }
 
-        console.log(`Place ${currentPlayerName}'s marker.`)
+        console.log(`Placed ${currentPlayerName}'s marker.`)
 
         if(checkGameEnd()) {
             console.log("Game over!")
-            
+
 
             return
         }
+
+        switchTurn();
+        console.log(`${getActivePlayer().name}'s turn.`)
+
     }
 
     printNewRound();
