@@ -23,8 +23,16 @@ const Gameboard = (function() {
         return true;
     }
 
+    const reset = () => {
+        for(let i = 0; i < rows; i++) {
+            for(let j = 0; j < columns; j++) {
+                board[i][j].addMarker("");
+            }
+        }
+    }
 
-    return { getBoard, placeMarker };
+
+    return { getBoard, placeMarker, reset };
 })();
 
 function Cell() {
@@ -36,15 +44,23 @@ function Cell() {
         value = playerMarker;
     }
     
-    return { addMarker, getValue };
+    
+    return { addMarker, getValue};
     }
 
 
 const displayController = (function() {
+
     playerOneName = "Player One"
     playerTwoName = "Player Two"
 
+    const restartButton = document.querySelector(".restart-button")
+    restartButton.addEventListener("click", () => {
+        resetGame();
+    })
+
     const board = Gameboard;
+    
 
     const players = [
         {
@@ -69,8 +85,18 @@ const displayController = (function() {
         console.log(`${getActivePlayer().name}'s turn.`);
     }
 
+    const resetGame = () => {
+        board.reset();
+        activePlayer = players[0];
+        const resultDisplay = document.querySelector(".result-display");
+        resultDisplay.textContent = "";
+        resultDisplay.classList.remove("X, O, draw");
+        printNewRound()
+    }
+
     const checkGameEnd = () => {
         const currentBoardValues = Gameboard.getBoard();
+        const resultDisplay = document.querySelector(".result-display")
         renderBoard();
         // Horizontal win
         for (let i = 0; i < 3; i++) {
@@ -79,7 +105,8 @@ const displayController = (function() {
                 currentBoardValues[i][0] === currentBoardValues[i][1] &&
                 currentBoardValues[i][1] === currentBoardValues[i][2]
             ) {
-                console.log(`${getActivePlayer().name} wins horizontally`);
+                resultDisplay.classList.add(`${getActivePlayer().marker}`);
+                resultDisplay.textContent = `${getActivePlayer().name} wins horizontally`;
                 return true;
             }
         }
@@ -90,7 +117,8 @@ const displayController = (function() {
                 currentBoardValues[0][i] === currentBoardValues[1][i] &&
                 currentBoardValues[1][i] === currentBoardValues[2][i]
             ) {
-                console.log(`${getActivePlayer().name} wins vertically`);
+                resultDisplay.classList.add(`${getActivePlayer().marker}`);
+                resultDisplay.textContent = `${getActivePlayer().name} wins vertically`;
                 return true;
             }
         }
@@ -100,7 +128,8 @@ const displayController = (function() {
             currentBoardValues[0][0] === currentBoardValues[1][1] &&
             currentBoardValues[1][1] === currentBoardValues[2][2]
         ) {
-            console.log(`${getActivePlayer().name} wins diagonally`);
+            resultDisplay.classList.add(`${getActivePlayer().marker}`);
+            resultDisplay.textContent = `${getActivePlayer().name} wins diagonally`;
             return true;
         }
 
@@ -109,7 +138,9 @@ const displayController = (function() {
             currentBoardValues[0][2] === currentBoardValues[1][1] &&
             currentBoardValues[1][1] === currentBoardValues[2][0]
         ) {
-            console.log(`${getActivePlayer().name} wins diagonally`);
+            resultDisplay.classList.add(`${getActivePlayer().marker}`);
+            resultDisplay.textContent = `${getActivePlayer().name} wins diagonally`;
+
             return true;
         }
 
@@ -123,7 +154,8 @@ const displayController = (function() {
         }
 
         if (filledCells === 9) {
-            console.log("It's a draw");
+            resultDisplay.classList.add("draw");
+            resultDisplay.textContent = `It's a draw`;
             return true;
         }
         return false;
@@ -143,24 +175,28 @@ const displayController = (function() {
 
         if(checkGameEnd()) {
             console.log("Game over!")
-
-
             return;
         }
 
         switchTurn();
         renderBoard();
         console.log(`${getActivePlayer().name}'s turn.`)
-
     }
 
     const renderBoard = () => {
         const gameBoardDiv = document.querySelector(".gameboard");
         gameBoardDiv.innerHTML = "";
         const turnDisplay = document.querySelector(".turn-display");
-
-        turnDisplay.textContent = `It's ${getActivePlayer().name}'s turn!`;
-
+       
+        // Update player turn display
+        turnDisplay.classList.remove("one", "two");
+        if (getActivePlayer() === players[0]) {
+            turnDisplay.classList.add("one")
+        } else {
+            turnDisplay.classList.add("two")
+        }
+            turnDisplay.textContent = `It's ${getActivePlayer().name}'s turn!`;
+        
         const currentBoardValues = board.getBoard();
 
         currentBoardValues.forEach((row, rowIndex) => {
@@ -179,6 +215,7 @@ const displayController = (function() {
     }
 
     printNewRound();
+    
 
     return {  getActivePlayer, playGame }
 

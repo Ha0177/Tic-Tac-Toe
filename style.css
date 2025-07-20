@@ -114,6 +114,33 @@ h1 {
     font-size: 1.1em;
     font-weight: bold;
     color: #555555;
+    line-height: 2em;
+}
+
+.turn-display,
+.result-display {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.turn-display.one {
+    color: #e74c3c;
+}
+
+.turn-display.two {
+    color: #3498db;
+}
+
+    
+
+.result-display.X {
+    color: #e74c3c;
+}
+.result-display.O {
+    color: #3498db;
+}
+.result-display.draw {
+    color: rgb(241, 187, 7);
 }
 
 @media (max-width: 450px) {
