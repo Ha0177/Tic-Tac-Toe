@@ -189,10 +189,12 @@ const displayController = (function() {
             turnDisplay.classList.add("two")
         }
             turnDisplay.textContent = `It's ${getActivePlayer().name}'s turn!`;
+        if (gameOver === true) {
+            turnDisplay.textContent = "";
+        }
         
-
+    
         const currentBoardValues = board.getBoard();
-        const resultDisplay = document.querySelector(".result-display")
 
         currentBoardValues.forEach((row, rowIndex) => {
             row.forEach((cellValue, colIndex) => {
