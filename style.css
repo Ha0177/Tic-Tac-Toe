@@ -9,7 +9,7 @@ body {
     background-color: #e0e0e0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    padding: 0;
+    padding: 20px;
     box-sizing: border-box;
 }
 
@@ -19,7 +19,6 @@ body {
     align-items: flex-start;
     margin-bottom: 0px;
     flex-grow: 1;
-    padding: 20px;
 }
 
 .player-input-card {
@@ -80,6 +79,11 @@ body {
 .save-names-button:hover {
     background-color: #1da39d;
     transform: translateY(-2px);
+}
+
+.save-names-button:active {
+    background-color: #148f86;
+    transform: translateY(0);
 }
 
 .game-container {
@@ -164,11 +168,12 @@ h1 {
 
 .result-display {
     margin-top: 20px;
-    font-size: 1.8em;
+    font-size: 2.8em;
     font-weight: bold;
     color: #555555;
-    min-height: 1.2em;
-    margin-bottom: 20px;
+    min-height: 1.5em;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .restart-button {
@@ -186,6 +191,11 @@ h1 {
 .restart-button:hover {
     background-color: #1da39d;
     transform: translateY(-2px);
+}
+
+.restart-button:active {
+    background-color: #148f86;
+    transform: translateY(0);
 }
 
 .player-one,
@@ -210,6 +220,7 @@ h1 {
 .turn-display.two {
     color: #3498db;
 }
+
 
 .result-display.X {
     color: #e74c3c;
