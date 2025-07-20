@@ -292,4 +292,10 @@ h1 {
     .game-container {
         padding: 20px;
     }
+    .turn-display,
+    .result-display {
+    font-size: 1.8em;
+    font-weight: bold;
+    min-height: 2.1em;
+}
 }
