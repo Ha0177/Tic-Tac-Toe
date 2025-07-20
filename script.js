@@ -197,11 +197,12 @@ const displayController = (function() {
         }
             turnDisplay.textContent = `It's ${getActivePlayer().name}'s turn!`;
         
+
         const currentBoardValues = board.getBoard();
 
         currentBoardValues.forEach((row, rowIndex) => {
             row.forEach((cellValue, colIndex) => {
-                const cellDiv = document.createElement("div");
+                const cellDiv = document.createElement("button");
                 cellDiv.classList.add("cell");
                 cellDiv.dataset.row = rowIndex;
                 cellDiv.dataset.column = colIndex;
