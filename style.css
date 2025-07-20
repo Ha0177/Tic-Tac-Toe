@@ -2,6 +2,7 @@
 
 body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
@@ -96,7 +97,7 @@ h1 {
     padding: 12px 25px;
     font-size: 1.1em;
     cursor: pointer;
-    background-color: #2ecc71;
+    background-color: #17a89c;
     color: white;
     border: none;
     border-radius: 6px;
@@ -105,7 +106,7 @@ h1 {
 }
 
 .restart-button:hover {
-    background-color: #27ae60;
+    background-color: #1da39d;
     transform: translateY(-2px);
 }
 
@@ -140,6 +141,42 @@ h1 {
 }
 .result-display.draw {
     color: rgb(241, 187, 7);
+}
+
+.game-footer {
+    margin-top: 50px;
+    width: 100%;
+    padding: 20px 0;
+    background-color: #d0d0d0;
+    color: #333333;
+    font-size: 1.2em;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.game-footer .github-link {
+    color: #17a89c;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.game-footer .github-link:hover {
+    color: #1da39d;
+}
+
+.game-footer .github-link:hover .github-icon {
+    transform: rotate(360deg) scale(1.2);
+}
+
+.game-footer .github-icon {
+    vertical-align: middle;
+    height: 1.3em;
+    width: 1.3em;
+    transition: transform 0.5s ease-in-out;
 }
 
 @media (max-width: 450px) {

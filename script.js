@@ -11,7 +11,6 @@ const Gameboard = (function() {
     }
     const getBoard = () => {
         const boardWithValues = board.map(row => row.map(cell => cell.getValue()));
-        console.log(boardWithValues);
         return boardWithValues;
     };
 
@@ -74,6 +73,8 @@ const displayController = (function() {
     ];
 
     let activePlayer = players[0];
+    let gameOver = false;
+
     const switchTurn = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
     };
@@ -82,15 +83,15 @@ const displayController = (function() {
     const printNewRound = () => {
         board.getBoard();
         renderBoard();
-        console.log(`${getActivePlayer().name}'s turn.`);
     }
 
     const resetGame = () => {
         board.reset();
         activePlayer = players[0];
+        gameOver = false;
         const resultDisplay = document.querySelector(".result-display");
         resultDisplay.textContent = "";
-        resultDisplay.classList.remove("X, O, draw");
+        resultDisplay.classList.remove("X,O,draw");
         printNewRound()
     }
 
@@ -106,8 +107,8 @@ const displayController = (function() {
                 currentBoardValues[i][1] === currentBoardValues[i][2]
             ) {
                 resultDisplay.classList.add(`${getActivePlayer().marker}`);
-                resultDisplay.textContent = `${getActivePlayer().name} wins horizontally`;
-                return true;
+                resultDisplay.textContent = `${getActivePlayer().name} wins`;
+                gameOver = true;
             }
         }
         // Vertical win
@@ -118,8 +119,8 @@ const displayController = (function() {
                 currentBoardValues[1][i] === currentBoardValues[2][i]
             ) {
                 resultDisplay.classList.add(`${getActivePlayer().marker}`);
-                resultDisplay.textContent = `${getActivePlayer().name} wins vertically`;
-                return true;
+                resultDisplay.textContent = `${getActivePlayer().name} wins`;
+                gameOver = true;
             }
         }
         // Diagonal wins
@@ -129,8 +130,8 @@ const displayController = (function() {
             currentBoardValues[1][1] === currentBoardValues[2][2]
         ) {
             resultDisplay.classList.add(`${getActivePlayer().marker}`);
-            resultDisplay.textContent = `${getActivePlayer().name} wins diagonally`;
-            return true;
+            resultDisplay.textContent = `${getActivePlayer().name} wins`;
+            gameOver = true;
         }
 
         if (
@@ -139,9 +140,8 @@ const displayController = (function() {
             currentBoardValues[1][1] === currentBoardValues[2][0]
         ) {
             resultDisplay.classList.add(`${getActivePlayer().marker}`);
-            resultDisplay.textContent = `${getActivePlayer().name} wins diagonally`;
-
-            return true;
+            resultDisplay.textContent = `${getActivePlayer().name} wins`;
+            gameOver = true;
         }
 
         let filledCells = 0;
@@ -156,31 +156,24 @@ const displayController = (function() {
         if (filledCells === 9) {
             resultDisplay.classList.add("draw");
             resultDisplay.textContent = `It's a draw`;
-            return true;
+            gameOver = true;
         }
-        return false;
     };
 
     const playGame = (row, column) => {
         const currentPlayerMarker = getActivePlayer().marker;
-        const currentPlayerName = getActivePlayer().name;
-
         const markerPlacedSuccessfully = board.placeMarker(row, column, currentPlayerMarker);
 
         if (!markerPlacedSuccessfully) {
             return;
         }
 
-        console.log(`Placed ${currentPlayerName}'s marker.`)
-
         if(checkGameEnd()) {
-            console.log("Game over!")
             return;
         }
 
         switchTurn();
         renderBoard();
-        console.log(`${getActivePlayer().name}'s turn.`)
     }
 
     const renderBoard = () => {
@@ -199,6 +192,7 @@ const displayController = (function() {
         
 
         const currentBoardValues = board.getBoard();
+        const resultDisplay = document.querySelector(".result-display")
 
         currentBoardValues.forEach((row, rowIndex) => {
             row.forEach((cellValue, colIndex) => {
@@ -211,6 +205,12 @@ const displayController = (function() {
                     cellDiv.classList.add(cellValue);
                 }
                 cellDiv.addEventListener("click", () => {
+                    if (cellValue !== "") {
+                        return;
+                    }
+                    if (gameOver === true) {
+                        return;
+                    }
                     playGame(rowIndex, colIndex);
                     renderBoard();
                 });
