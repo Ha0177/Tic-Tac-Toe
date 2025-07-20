@@ -15,6 +15,9 @@ const Gameboard = (function() {
     };
 
     const placeMarker = (row, column, playerMarker) => {
+        if (board[row][column].getValue() !== "") {
+            return;
+        }
         board[row][column].addMarker(playerMarker);
     }
 
@@ -39,7 +42,7 @@ const displayController = (function() {
     playerOneName = "Player One"
     playerTwoName = "Player Two"
 
-    const board = Gameboard();
+    const board = Gameboard;
 
     const players = [
         {
@@ -58,9 +61,23 @@ const displayController = (function() {
     };
     const getActivePlayer = () => activePlayer;
 
-    
-})();
+    const printNewRound = () => {
+        board.getBoard();
+        console.log(`${getActivePlayer().name}'s turn.`)
+    }
 
+    const playRound = (row, column) => {
+        console.log(`Placed ${getActivePlayer().name}'s marker`);
+        board.placeMarker(row, column, getActivePlayer().marker);
+        switchTurn();
+        printNewRound();
+    };
+
+    printNewRound();
+
+    return { playRound, getActivePlayer }
+
+})();
 
 
 
