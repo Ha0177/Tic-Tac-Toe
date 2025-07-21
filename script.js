@@ -92,7 +92,7 @@ const displayController = (function() {
         gameOver = false;
         const resultDisplay = document.querySelector(".result-display");
         resultDisplay.textContent = "";
-        resultDisplay.classList.remove("X,O,draw");
+        resultDisplay.classList.remove("X","O","draw");
         printNewRound()
     }
 
