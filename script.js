@@ -82,7 +82,6 @@ const displayController = (function() {
     const getActivePlayer = () => activePlayer;
 
     const printNewRound = () => {
-        board.getBoard();
         renderBoard();
     }
 
