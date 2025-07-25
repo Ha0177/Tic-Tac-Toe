@@ -229,7 +229,6 @@ const displayController = (function() {
                         cellDiv.classList.add(activePlayerMarker);
                     });
                     cellDiv.addEventListener("mouseout", () => {
-                        if (gameOver) return;
                         cellDiv.textContent = "";
                     })
                 }
