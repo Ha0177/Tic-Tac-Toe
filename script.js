@@ -97,8 +97,7 @@ const displayController = (function() {
 
     const checkGameEnd = () => {
         const currentBoardValues = Gameboard.getBoard();
-        const resultDisplay = document.querySelector(".result-display")
-
+        
         // Horizontal win
         for (let i = 0; i < 3; i++) {
             if (
@@ -106,10 +105,7 @@ const displayController = (function() {
                 currentBoardValues[i][0] === currentBoardValues[i][1] &&
                 currentBoardValues[i][1] === currentBoardValues[i][2]
             ) {
-                resultDisplay.classList.add(`${getActivePlayer().marker}`);
-                resultDisplay.textContent = `${getActivePlayer().name} wins`;
-                gameOver = true;
-                return;
+                return `${getActivePlayer().marker}_wins`;
             }
         }
         // Vertical win
@@ -119,10 +115,7 @@ const displayController = (function() {
                 currentBoardValues[0][i] === currentBoardValues[1][i] &&
                 currentBoardValues[1][i] === currentBoardValues[2][i]
             ) {
-                resultDisplay.classList.add(`${getActivePlayer().marker}`);
-                resultDisplay.textContent = `${getActivePlayer().name} wins`;
-                gameOver = true;
-                return;
+                return `${getActivePlayer().marker}_wins`;
             }
         }
         // Diagonal wins
@@ -131,10 +124,7 @@ const displayController = (function() {
             currentBoardValues[0][0] === currentBoardValues[1][1] &&
             currentBoardValues[1][1] === currentBoardValues[2][2]
         ) {
-            resultDisplay.classList.add(`${getActivePlayer().marker}`);
-            resultDisplay.textContent = `${getActivePlayer().name} wins`;
-            gameOver = true;
-            return;
+            return `${getActivePlayer().marker}_wins`;
         }
 
         if (
@@ -142,10 +132,7 @@ const displayController = (function() {
             currentBoardValues[0][2] === currentBoardValues[1][1] &&
             currentBoardValues[1][1] === currentBoardValues[2][0]
         ) {
-            resultDisplay.classList.add(`${getActivePlayer().marker}`);
-            resultDisplay.textContent = `${getActivePlayer().name} wins`;
-            gameOver = true;
-            return;
+            return `${getActivePlayer().marker}_wins`;
         }
 
         let filledCells = 0;
@@ -158,11 +145,11 @@ const displayController = (function() {
         }
 
         if (filledCells === 9) {
-            resultDisplay.classList.add("draw");
-            resultDisplay.textContent = `It's a draw`;
-            gameOver = true;
+            return "draw";
         }
+        return "none"; 
     };
+    
     const playGame = (row, column) => {
         const currentPlayerMarker = getActivePlayer().marker;
         const markerPlacedSuccessfully = board.placeMarker(row, column, currentPlayerMarker);
@@ -171,7 +158,20 @@ const displayController = (function() {
             return;
         }
 
-        if(checkGameEnd()) {
+        const gameStatus = checkGameEnd();
+        const resultDisplay = document.querySelector(".result-display");
+
+        if (gameStatus === "X_wins" || gameStatus === "O_wins") {
+            resultDisplay.classList.add(getActivePlayer().marker);
+            resultDisplay.textContent = `${getActivePlayer().name} wins`;
+            gameOver = true;
+            renderBoard(); 
+            return;
+        } else if (gameStatus === "draw") {
+            resultDisplay.classList.add("draw");
+            resultDisplay.textContent = `It's a draw`;
+            gameOver = true;
+            renderBoard(); 
             return;
         }
 
@@ -184,7 +184,7 @@ const displayController = (function() {
         gameBoardDiv.innerHTML = "";
         const turnDisplay = document.querySelector(".turn-display");
        
-        // Update player turn display
+        
         turnDisplay.classList.remove("one", "two");
         if (getActivePlayer() === players[0]) {
             turnDisplay.classList.add("one")
